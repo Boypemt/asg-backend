@@ -1,4 +1,4 @@
-package th.mfu;
+package th.camt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
