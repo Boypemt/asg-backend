@@ -21,6 +21,7 @@
         <failsafe.version>2.22.0</failsafe.version>
         <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
         <java.version>11</java.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
 
     <modules>
@@ -40,5 +41,35 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--
+                    MapStruct generates the mapper implementations WHILE the code
+                    compiles, so it is an annotation processor and not an
+                    ordinary dependency. The generated classes end up in
+                    target/generated-sources/annotations/.
+                -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <release>${java.version}</release>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                        <compilerArgs>
+                            <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

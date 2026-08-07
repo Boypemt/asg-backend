@@ -20,3 +20,18 @@ INSERT INTO product (name, price, description, manufactureDate) VALUES ('Bluetoo
 INSERT INTO product (name, price, description, manufactureDate) VALUES ('USB-C Hub', 54.99, '7-in-1 USB-C hub with HDMI, USB ports, and SD card reader for laptops', '2024-03-12');
 
 
+
+-- Sale orders: many-to-one to customer
+INSERT INTO sale_order (orderDate, status, customer_id) VALUES ('2024-04-01', 'PAID', 1);
+INSERT INTO sale_order (orderDate, status, customer_id) VALUES ('2024-04-03', 'SHIPPED', 2);
+INSERT INTO sale_order (orderDate, status, customer_id) VALUES ('2024-04-05', 'NEW', 1);
+
+-- Order items: many-to-one to sale_order AND to product (unitPrice copied at time of sale)
+INSERT INTO order_item (quantity, unitPrice, saleorder_id, product_id) VALUES (1, 79.99, 1, 1);
+INSERT INTO order_item (quantity, unitPrice, saleorder_id, product_id) VALUES (2, 34.99, 1, 8);
+INSERT INTO order_item (quantity, unitPrice, saleorder_id, product_id) VALUES (1, 149.99, 2, 2);
+INSERT INTO order_item (quantity, unitPrice, saleorder_id, product_id) VALUES (3, 24.99, 3, 3);
+
+-- Payments: one-to-one with sale_order (order 3 is unpaid, so it has no row)
+INSERT INTO payment (method, amount, paidDate, saleorder_id) VALUES ('CREDIT_CARD', 149.97, '2024-04-01', 1);
+INSERT INTO payment (method, amount, paidDate, saleorder_id) VALUES ('PROMPTPAY', 149.99, '2024-04-03', 2);
