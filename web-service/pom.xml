@@ -14,11 +14,15 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>th.mfu</groupId>
-            <artifactId>web-front</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!--
+            The entities come from the other module. This one line IS the
+            dependency arrow: web-service knows about domain-model, and
+            domain-model knows nothing about us.
+
+            web-front is NOT a dependency: it is a separate tier that talks to
+            this service over HTTP. (It is also packaged as a war, so asking for
+            it as a jar could never resolve.)
+        -->
         <dependency>
             <groupId>th.mfu</groupId>
             <artifactId>domain-model</artifactId>
